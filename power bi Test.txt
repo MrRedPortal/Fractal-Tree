@@ -1,0 +1,81 @@
+<!DOCTYPE html><html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .controls {
+            margin: 10px;
+        }
+        .tree-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+        }
+        .branch {
+            position: absolute;
+            width: 4px;
+            background-color: white;
+            transform-origin: bottom;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>Depth: <input type="range" id="depth" min="1" max="10" value="6"></label>
+        <label>Angle: <input type="range" id="angle" min="10" max="60" value="30"></label>
+    </div>
+    <div class="tree-container" id="tree"></div><script>
+    function drawTree(parent, length, angle, depth) {
+        if (depth === 0) return;
+
+        const branch = document.createElement('div');
+        branch.classList.add('branch');
+        branch.style.height = length + 'px';
+        parent.appendChild(branch);
+
+        const leftBranch = document.createElement('div');
+        leftBranch.classList.add('branch');
+        leftBranch.style.height = (length * 0.7) + 'px';
+        leftBranch.style.transform = `rotate(-${angle}deg)`;
+        branch.appendChild(leftBranch);
+
+        const rightBranch = document.createElement('div');
+        rightBranch.classList.add('branch');
+        rightBranch.style.height = (length * 0.7) + 'px';
+        rightBranch.style.transform = `rotate(${angle}deg)`;
+        branch.appendChild(rightBranch);
+
+        setTimeout(() => {
+            drawTree(leftBranch, length * 0.7, angle, depth - 1);
+            drawTree(rightBranch, length * 0.7, angle, depth - 1);
+        }, 10);
+    }
+    
+    function generateFractal() {
+        const treeContainer = document.getElementById('tree');
+        treeContainer.innerHTML = '';
+        const depth = document.getElementById('depth').value;
+        const angle = document.getElementById('angle').value;
+        
+        drawTree(treeContainer, 100, angle, depth);
+    }
+    
+    document.getElementById('depth').addEventListener('input', generateFractal);
+    document.getElementById('angle').addEventListener('input', generateFractal);
+    
+    generateFractal();
+</script>
+
+</body>
+</html>
