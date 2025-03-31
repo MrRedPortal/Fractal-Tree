@@ -1,6 +1,6 @@
-<!DOCTYPE html><html>
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
     <style>
         body {
             background-color: black;
@@ -13,6 +13,7 @@
         }
         .controls {
             margin: 10px;
+            color: white;
         }
         .tree-container {
             position: relative;
@@ -31,11 +32,12 @@
     </style>
 </head>
 <body>
-    <div class="controls">
-        <label>Depth: <input type="range" id="depth" min="1" max="10" value="6"></label>
-        <label>Angle: <input type="range" id="angle" min="10" max="60" value="30"></label>
+    <div class='controls'>
+        <label>Depth: <input type='range' id='depth' min='1' max='10' value='6'></label>
+        <label>Angle: <input type='range' id='angle' min='10' max='60' value='30'></label>
+        <label>Length: <input type='range' id='length' min='10' max ='500' value='100'></label>
     </div>
-    <div class="tree-container" id="tree"></div><script>
+    <div class='tree-container' id='tree'></div><script>
     function drawTree(parent, length, angle, depth) {
         if (depth === 0) return;
 
@@ -67,13 +69,13 @@
         treeContainer.innerHTML = '';
         const depth = document.getElementById('depth').value;
         const angle = document.getElementById('angle').value;
-        
-        drawTree(treeContainer, 100, angle, depth);
+        const length = document.getElementById('length').value;
+        drawTree(treeContainer, length, angle, depth);
     }
     
     document.getElementById('depth').addEventListener('input', generateFractal);
     document.getElementById('angle').addEventListener('input', generateFractal);
-    
+    document.getElementById('length').addEventListener('input', generateFractal);
     generateFractal();
 </script>
 
